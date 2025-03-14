@@ -59,7 +59,8 @@ on the Main Dashboard Page, you can search for movies.. when you start typing an
 
 2-After that, a verifivation code will be sent to your email , copy that code and paste it in its corresponding field.. remember that you aren't allowed to request more than one code ever two minutes.
 
+3- after writing valid verification code, you will be redirected to a page where you will assign your new password
+
 
 **Note:** This Front end was generated Using Ai tools, Of course Creating a Front-End Project and linking it to the Back-end requires some basic Knowledge but Ai Tools Proved that it can generate A whole Website by prompting Well-Structured Instructions and Being able to Track the Flow of both Backend and Front End using Browser's Dev Tools to correct Strange Behaviour of the Website to make sure that everything is Goin on as Intended!
 
-3- after writing valid verification code, you will be redirected to a page where you will assign your new password
