@@ -1,1 +1,156 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { 
+  margin: 0; 
+  font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.success-snackbar {
+  background: #4caf50 !important;
+  color: white !important;
+}
+
+.error-snackbar {
+  background: #f44336 !important;
+  color: white !important;
+}
+
+.info-snackbar {
+  background: #2196f3 !important;
+  color: white !important;
+}
+
+.mat-mdc-snack-bar-action {
+  color: white !important;
+}
+
+/* Global dark theme overrides */
+.mat-mdc-card {
+  background-color: #1e1e1e;
+  color: #ffffff;
+}
+
+.mat-mdc-select-panel {
+  background: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+.mat-mdc-option {
+  color: #ffffff !important;
+}
+
+.mat-mdc-option:hover:not(.mat-mdc-option-disabled) {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.mat-mdc-option.mat-mdc-option-active {
+  background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Dark theme for dialogs */
+.mat-mdc-dialog-container {
+  background: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+/* Dark theme for inputs */
+.mat-mdc-form-field {
+  color: #ffffff;
+}
+
+.mat-mdc-text-field-wrapper {
+  background-color: #1e1e1e;
+}
+
+.mat-mdc-form-field-label {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+/* Dark theme for buttons */
+.mat-mdc-raised-button.mat-primary {
+  background-color: #7b1fa2;
+}
+
+.mat-mdc-raised-button.mat-accent {
+  background-color: #69f0ae;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #424242;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #616161;
+}
+
+/* Confirmation Dialog Styles */
+.confirmation-dialog {
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.confirmation-dialog .mat-mdc-dialog-container {
+  padding: 0;
+}
+
+.confirmation-dialog .mat-mdc-dialog-content {
+  padding: 24px;
+}
+
+.confirmation-dialog .mat-mdc-dialog-actions {
+  padding: 16px 24px;
+  margin-bottom: 0;
+}
+
+.confirmation-dialog .mat-mdc-dialog-title {
+  margin: 0;
+  padding: 24px 24px 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.confirmation-dialog .mat-mdc-dialog-content p {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 16px;
+}
+
+.confirmation-dialog .mat-mdc-dialog-actions button {
+  min-width: 100px;
+}
+
+/* Animation for dialog */
+.cdk-overlay-container {
+  position: fixed;
+  z-index: 1000;
+}
+
+.cdk-overlay-pane {
+  position: static;
+}
+
+.cdk-overlay-backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.cdk-overlay-pane {
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
+}
+
+.cdk-overlay-pane.cdk-overlay-pane-showing {
+  transform: translateY(0);
+}

@@ -1,0 +1,104 @@
+<div class="movie-details-container" *ngIf="movie">
+  <div class="movie-header">
+    <h1>{{ movie.title }}</h1>
+    <div class="movie-meta">
+      <span><mat-icon>calendar_today</mat-icon> {{ movie.year }}</span>
+      <span><mat-icon>star</mat-icon> Website Rating: {{ overallRating }}/10</span>
+      <span><mat-icon>movie</mat-icon> {{ movie.genre }}</span>
+      <span><mat-icon>schedule</mat-icon> {{ movie.runtime }}</span>
+    </div>
+  </div>
+
+  <div class="movie-content">
+    <div class="movie-image">
+      <img [src]="movie.poster" [alt]="movie.title">
+    </div>
+    
+    <div class="movie-info">
+      <div class="movie-plot">
+        <h3>Plot</h3>
+        <p>{{ movie.plot }}</p>
+      </div>
+
+      <div class="movie-details-grid">
+        <div class="detail-section">
+          <h3>Movie Information</h3>
+          <div class="detail-item">
+            <mat-icon>person</mat-icon>
+            <div class="detail-content">
+              <strong>Director:</strong> {{ movie.director }}
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>edit</mat-icon>
+            <div class="detail-content">
+              <strong>Writer:</strong> {{ movie.writer }}
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>group</mat-icon>
+            <div class="detail-content">
+              <strong>Cast:</strong> {{ movie.actors }}
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Additional Details</h3>
+          <div class="detail-item">
+            <mat-icon>language</mat-icon>
+            <div class="detail-content">
+              <strong>Language:</strong> {{ movie.language }}
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>public</mat-icon>
+            <div class="detail-content">
+              <strong>Country:</strong> {{ movie.country }}
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>emoji_events</mat-icon>
+            <div class="detail-content">
+              <strong>Awards:</strong> {{ movie.awards }}
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3>Ratings</h3>
+          <div class="detail-item">
+            <mat-icon>star_half</mat-icon>
+            <div class="detail-content">
+              <strong>Metacritic:</strong> {{ movie.metacritic_rating }}
+            </div>
+          </div>
+          <div class="detail-item">
+            <mat-icon>star_border</mat-icon>
+            <div class="detail-content">
+              <strong>Rotten Tomatoes:</strong> {{ movie.rotten_tomatoes_rating }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rating-section">
+    <app-movie-rating 
+      *ngIf="movie"
+      [movieId]="movie.id"
+      (ratingSubmitted)="onRatingSubmitted()">
+    </app-movie-rating>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loading-container">
+  <mat-spinner></mat-spinner>
+  <p>Loading movie details...</p>
+</div>
+
+<div *ngIf="error" class="error-container">
+  <mat-icon>error</mat-icon>
+  <p>{{ error }}</p>
+</div>

@@ -1,0 +1,38 @@
+<div class="search-container">
+    <div class="search-box">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Movies</mat-label>
+        <input matInput [(ngModel)]="keyword" (keypress)="onKeyPress($event)" placeholder="Enter movie title">
+        <button mat-icon-button matSuffix (click)="searchMovies()" [disabled]="searching">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    
+    <div *ngIf="searching" class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Searching for movies...</p>
+    </div>
+    
+    <div *ngIf="noResults && !searching" class="no-results">
+      <mat-icon>sentiment_dissatisfied</mat-icon>
+      <p>No movies found matching "{{keyword}}"</p>
+    </div>
+    
+    <div *ngIf="searchResults.length > 0" class="results-container">
+      <h2>Search Results</h2>
+      <div class="movie-grid">
+        <mat-card *ngFor="let movie of searchResults" class="movie-card">
+          <img mat-card-image [src]="movie.poster || 'assets/img/no-poster.png'" alt="{{movie.title}} poster" class="movie-poster">
+          <mat-card-content>
+            <h3>{{movie.title}}</h3>
+            <p>{{movie.year}} • {{movie.genre}}</p>
+            <p *ngIf="movie.imdbRating">IMDb: {{movie.imdbRating}}/10</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button color="primary" (click)="viewMovieDetails(movie.title)">VIEW DETAILS</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>

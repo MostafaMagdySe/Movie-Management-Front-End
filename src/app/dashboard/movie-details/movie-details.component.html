@@ -1,0 +1,88 @@
+<!-- src/app/dashboard/movie-details/movie-details.component.html -->
+<div class="movie-details-container">
+    <mat-card *ngIf="movie">
+      <mat-card-header>
+        <mat-card-title>{{ movie.Title }}</mat-card-title>
+        <mat-card-subtitle>{{ movie.Year }} | {{ movie.Rated }} | {{ movie.Runtime }}</mat-card-subtitle>
+      </mat-card-header>
+      
+      <div class="movie-content">
+        <div class="movie-poster">
+          <img [src]="movie.Poster" alt="{{ movie.Title }}" *ngIf="movie.Poster !== 'N/A'">
+          <div class="placeholder-poster" *ngIf="movie.Poster === 'N/A'">
+            <mat-icon>movie</mat-icon>
+            <p>No Poster Available</p>
+          </div>
+        </div>
+        
+        <div class="movie-info">
+          <p><strong>Genre:</strong> {{ movie.Genre }}</p>
+          <p><strong>Director:</strong> {{ movie.Director }}</p>
+          <p><strong>Writer:</strong> {{ movie.Writer }}</p>
+          <p><strong>Actors:</strong> {{ movie.Actors }}</p>
+          <p><strong>Plot:</strong> {{ movie.Plot }}</p>
+          <p><strong>Language:</strong> {{ movie.Language }}</p>
+          <p><strong>Country:</strong> {{ movie.Country }}</p>
+          <p><strong>Awards:</strong> {{ movie.Awards }}</p>
+          <p><strong>Box Office:</strong> {{ movie.BoxOffice }}</p>
+          
+          <div class="ratings-section">
+            <h3>Ratings</h3>
+            <div class="external-ratings" *ngIf="movie.Ratings && movie.Ratings.length > 0">
+              <p *ngFor="let rating of movie.Ratings">
+                <strong>{{ rating.Source }}:</strong> {{ rating.Value }}
+              </p>
+            </div>
+            <p><strong>IMDb Rating:</strong> {{ movie.imdbRating }} ({{ movie.imdbVotes }} votes)</p>
+            
+            <div class="user-ratings" *ngIf="movie.userRatings && movie.userRatings.length > 0">
+              <h4>User Ratings</h4>
+              <div class="user-rating" *ngFor="let rating of movie.userRatings">
+                <p><strong>User:</strong> {{ rating.username }}</p>
+                <p><strong>Rating:</strong> {{ rating.rating }}/10</p>
+                <p *ngIf="rating.comment"><strong>Comment:</strong> {{ rating.comment }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <mat-card-actions>
+        <button mat-button color="primary" (click)="goBack()">
+          <mat-icon>arrow_back</mat-icon> Back to Movies
+        </button>
+      </mat-card-actions>
+      
+      <mat-divider></mat-divider>
+      
+      <mat-card-content class="rating-form-section" *ngIf="!isAdmin">
+        <h3>{{ userHasRated ? 'Your Rating' : 'Rate This Movie' }}</h3>
+        
+        <form [formGroup]="ratingForm" (ngSubmit)="submitRating()">
+          <mat-form-field appearance="outline">
+            <mat-label>Rating (1-10)</mat-label>
+            <input matInput type="number" formControlName="rating" min="1" max="10">
+            <mat-error *ngIf="ratingForm.get('rating')?.invalid">Please enter a rating between 1 and 10</mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Comment</mat-label>
+            <textarea matInput formControlName="comment" rows="4"></textarea>
+          </mat-form-field>
+          
+          <div class="rating-actions">
+            <button mat-raised-button color="primary" type="submit" *ngIf="!userHasRated" [disabled]="ratingForm.invalid || isLoading">
+              Submit Rating
+            </button>
+            <button mat-raised-button color="warn" type="button" *ngIf="userHasRated" (click)="deleteRating()" [disabled]="isLoading">
+              Delete My Rating
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+    
+    <div class="loading-spinner" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>

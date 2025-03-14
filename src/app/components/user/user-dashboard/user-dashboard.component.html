@@ -1,0 +1,103 @@
+<!-- src/app/dashboard/user-dashboard/user-dashboard.component.html -->
+<div class="dashboard-container">
+  <div class="admin-actions" *ngIf="isAdmin$ | async">
+    <button mat-raised-button color="primary" (click)="openAddMoviesDialog()">
+      <mat-icon>add_circle</mat-icon>
+      Add Movies
+    </button>
+    <button mat-raised-button color="warn" (click)="openRemoveMoviesDialog()">
+      <mat-icon>remove_circle</mat-icon>
+      Remove Movies
+    </button>
+  </div>
+
+  <h1>Movies Collection</h1>
+
+  <!-- Search Bar -->
+  <div class="search-section">
+    <form (ngSubmit)="onSearchSubmit($event)">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search movies by title, genre, or year</mat-label>
+        <input matInput [formControl]="searchControl" type="search">
+        <button mat-icon-button matPrefix type="submit" [disabled]="!searchControl.value">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button matSuffix *ngIf="searchControl.value" (click)="clearSearch()" type="button">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </form>
+  </div>
+
+  <div *ngIf="loading" class="loading-container">
+    <mat-spinner></mat-spinner>
+    <p>Loading movies...</p>
+  </div>
+
+  <div *ngIf="error" class="error-container">
+    <mat-icon color="warn">error</mat-icon>
+    <p>{{ error }}</p>
+    <button mat-raised-button color="primary" (click)="loadMovies()">Try Again</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="movies-grid">
+    <mat-card *ngFor="let movie of movies" class="movie-card" [routerLink]="['/movie', movie.title]">
+      <img mat-card-image [src]="movie.poster" [alt]="movie.title + ' poster'" 
+           onerror="this.src='assets/images/no-poster.jpg'">
+      <mat-card-content>
+        <h2>{{ movie.title }}</h2>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="!loading && !error && movies.length === 0" class="no-movies">
+    <mat-icon>movie_off</mat-icon>
+    <p>No movies available</p>
+  </div>
+
+  <mat-paginator *ngIf="totalMovies > 0"
+                 [length]="totalMovies"
+                 [pageSize]="pageSize"
+                 [pageIndex]="currentPage - 1"
+                 [pageSizeOptions]="[5, 10, 25, 50]"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
+</div>
+
+<!-- Add Movies Dialog Template -->
+<ng-template #addMoviesDialog>
+  <h2 mat-dialog-title>Add Movies</h2>
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Enter Movie Titles</mat-label>
+      <textarea matInput [(ngModel)]="movieTitles" rows="5" 
+                placeholder="Enter one movie title per line&#13;&#10;Example:&#13;&#10;The Shawshank Redemption&#13;&#10;The Godfather"></textarea>
+      <mat-hint>Each title should be on a new line</mat-hint>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" (click)="addMovies()" [disabled]="!movieTitles.trim()">
+      Add Movies
+    </button>
+  </mat-dialog-actions>
+</ng-template>
+
+<!-- Remove Movies Dialog Template -->
+<ng-template #removeMoviesDialog>
+  <h2 mat-dialog-title>Remove Movies</h2>
+  <mat-dialog-content>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Enter Movie Titles to Remove</mat-label>
+      <textarea matInput [(ngModel)]="movieTitles" rows="5" 
+                placeholder="Enter one movie title per line&#13;&#10;Example:&#13;&#10;The Shawshank Redemption&#13;&#10;The Godfather"></textarea>
+      <mat-hint>Each title should be on a new line</mat-hint>
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="warn" (click)="removeMovies()" [disabled]="!movieTitles.trim()">
+      Remove Movies
+    </button>
+  </mat-dialog-actions>
+</ng-template>

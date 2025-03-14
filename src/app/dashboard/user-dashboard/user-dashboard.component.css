@@ -1,0 +1,38 @@
+/* src/app/dashboard/user-dashboard/user-dashboard.component.scss */
+.dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .dashboard-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+    text-align: center;
+  }
+  
+  .search-container {
+    margin-bottom: 2rem;
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 3rem;
+  }
+  
+  .error-container {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .error-message {
+    color: #f44336;
+    margin-bottom: 1rem;
+  }
+  
+  mat-paginator {
+    margin-top: 2rem;
+  }

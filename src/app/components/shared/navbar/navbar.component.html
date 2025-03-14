@@ -1,0 +1,32 @@
+<mat-toolbar color="primary">
+  <div class="container">
+    <a mat-button routerLink="/" class="brand">Movie Management</a>
+    
+    <span class="spacer"></span>
+
+    <div class="nav-links">
+      <ng-container *ngIf="isLoggedIn">
+        <a mat-button routerLink="/user-dashboard" routerLinkActive="active" *ngIf="!isAdmin">Dashboard</a>
+        <a mat-button routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin">Admin Dashboard</a>
+        <a mat-button routerLink="/user-dashboard" routerLinkActive="active">Movies</a>
+        <a mat-button routerLink="/profile" routerLinkActive="active" class="profile-link">
+          <mat-icon>account_circle</mat-icon>
+          <span>Hello, {{ username }}</span>
+        </a>
+        <button mat-button (click)="logout()" class="logout-button">
+          <mat-icon>exit_to_app</mat-icon>
+          Logout
+        </button>
+      </ng-container>
+    </div>
+
+    <span class="spacer"></span>
+
+    <div class="auth-buttons">
+      <ng-container *ngIf="!isLoggedIn">
+        <a mat-button routerLink="/login" routerLinkActive="active">Login</a>
+        <a mat-button routerLink="/register" routerLinkActive="active">Register</a>
+      </ng-container>
+    </div>
+  </div>
+</mat-toolbar>

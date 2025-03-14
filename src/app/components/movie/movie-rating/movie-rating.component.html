@@ -1,0 +1,96 @@
+<div class="rating-section">
+  <div class="rating-header">
+    <h3>Movie Ratings & Reviews</h3>
+  </div>
+
+  <!-- New Rating Section (when user hasn't rated) -->
+  <div class="user-rating" *ngIf="!hasUserRated">
+    <h4>Rate this Movie</h4>
+    <div class="interactive-stars">
+      <mat-icon *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"
+                class="interactive-star"
+                [class.active]="i <= hoverRating"
+                [class.selected]="i <= userRating"
+                (mouseenter)="hoverRating = i"
+                (mouseleave)="hoverRating = 0"
+                (click)="userRating = i">
+        star
+      </mat-icon>
+    </div>
+    <p class="rating-label">{{ getRatingLabel(userRating) }}</p>
+
+    <div class="comment-section">
+      <mat-form-field appearance="outline">
+        <mat-label>Your Review</mat-label>
+        <textarea matInput
+                  [(ngModel)]="userComment"
+                  name="comment"
+                  rows="3"
+                  placeholder="Share your thoughts about this movie...">
+        </textarea>
+      </mat-form-field>
+
+      <button mat-raised-button 
+              color="primary" 
+              (click)="submitRating()"
+              [disabled]="isSubmitting || !userRating || !userComment.trim()">
+        <mat-spinner diameter="20" *ngIf="isSubmitting"></mat-spinner>
+        <span *ngIf="!isSubmitting">Submit Review</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- User's Existing Rating Section -->
+  <div class="user-rating existing-rating" *ngIf="hasUserRated && currentUserRating">
+    <div class="existing-rating-header">
+      <h4>Your Rating</h4>
+      <div class="rating-actions">
+        <button mat-icon-button 
+                color="warn" 
+                (click)="deleteRating()"
+                matTooltip="Delete your rating"
+                [disabled]="isSubmitting">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="rating-display">
+      <div class="rating-stars">
+        <mat-icon *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"
+                  class="star-icon"
+                  [class.filled]="i <= currentUserRating.rating">
+          star
+        </mat-icon>
+      </div>
+      <p class="rating-value" *ngIf="currentUserRating">
+        {{ currentUserRating.rating }}/10 - {{ getRatingLabel(currentUserRating.rating) }}
+      </p>
+      <p class="user-comment" *ngIf="currentUserRating">{{ currentUserRating.comment }}</p>
+    </div>
+    <p class="rating-note">To submit a new rating, please delete your current rating first.</p>
+  </div>
+
+  <!-- Other Reviews Section -->
+  <div class="comments-section">
+    <h4>User Reviews</h4>
+    <div class="comments-list">
+      <div *ngFor="let review of reviews" class="comment-item">
+        <div class="comment-header">
+          <div class="user-rating-info">
+            <span class="username">{{ review.username }}</span>
+            <div class="rating-value">
+              <mat-icon *ngFor="let i of [1,2,3,4,5,6,7,8,9,10]"
+                       class="star-icon small"
+                       [class.filled]="i <= review.rating">
+                star
+              </mat-icon>
+              <span>{{ review.rating }}/10</span>
+            </div>
+          </div>
+        </div>
+        <p class="comment-text">{{ review.comment }}</p>
+      </div>
+      <p *ngIf="reviews.length === 0" class="no-comments">No reviews yet. Be the first to review this movie!</p>
+    </div>
+  </div>
+</div>

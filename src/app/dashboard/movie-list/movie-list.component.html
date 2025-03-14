@@ -1,0 +1,39 @@
+<!-- src/app/dashboard/movie-list/movie-list.component.html -->
+<div class="movie-list-container">
+    <h2>Movie Library</h2>
+    
+    <div class="loading-spinner" *ngIf="isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+    
+    <div class="movies-grid" *ngIf="!isLoading && movies.length > 0">
+      <mat-card class="movie-card" *ngFor="let movie of movies" (click)="viewMovieDetails(movie.Title)">
+        <img mat-card-image [src]="movie.Poster" alt="{{ movie.Title }}" *ngIf="movie.Poster !== 'N/A'">
+        <div class="placeholder-poster" *ngIf="movie.Poster === 'N/A'">
+          <mat-icon>movie</mat-icon>
+          <p>No Poster Available</p>
+        </div>
+        <mat-card-content>
+          <h3>{{ movie.Title }}</h3>
+          <p>{{ movie.Year }} | {{ movie.Runtime }}</p>
+          <p class="rating" *ngIf="movie.imdbRating !== 'N/A'">
+            <mat-icon>star</mat-icon> {{ movie.imdbRating }}/10
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    
+    <div class="no-movies" *ngIf="!isLoading && movies.length === 0">
+      <mat-icon>movie_off</mat-icon>
+      <p>No movies found in the database.</p>
+    </div>
+    
+    <mat-paginator 
+      [length]="totalMovies"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="[6, 12, 24, 48]"
+      [pageIndex]="currentPage - 1"
+      (page)="changePage($event)"
+      *ngIf="!isLoading && movies.length > 0">
+    </mat-paginator>
+  </div>

@@ -1,0 +1,42 @@
+<div class="admin-container">
+  <h1>Admin Dashboard</h1>
+
+  <div class="admin-actions">
+    <mat-card class="action-card">
+      <mat-card-header>
+        <mat-card-title>Manage Movies</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p class="instructions">Enter movie titles below (one per line) to add or remove them from the system.</p>
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Enter Movie Titles</mat-label>
+          <textarea matInput [(ngModel)]="movieTitles" rows="5" 
+                    placeholder="Example:&#13;&#10;The Shawshank Redemption&#13;&#10;The Godfather&#13;&#10;The Dark Knight"></textarea>
+          <mat-hint>Each title should be on a new line</mat-hint>
+        </mat-form-field>
+
+        <div class="response-message" *ngIf="responseMessage">
+          {{ responseMessage }}
+        </div>
+      </mat-card-content>
+      
+      <mat-card-actions>
+        <div class="button-container">
+          <button mat-raised-button color="primary" (click)="addMovies()" [disabled]="isLoading || !movieTitles.trim()">
+            <mat-icon>add_circle</mat-icon>
+            Add Movies
+          </button>
+          <button mat-raised-button color="warn" (click)="removeMovies()" [disabled]="isLoading || !movieTitles.trim()">
+            <mat-icon>delete_forever</mat-icon>
+            Remove Movies
+          </button>
+        </div>
+      </mat-card-actions>
+      
+      <mat-card-footer>
+        <mat-progress-bar mode="indeterminate" *ngIf="isLoading"></mat-progress-bar>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

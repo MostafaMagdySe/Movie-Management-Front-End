@@ -1,0 +1,83 @@
+<!-- src/app/dashboard/admin-dashboard/admin-dashboard.component.html -->
+<div class="admin-dashboard-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Movie Management Dashboard</mat-card-title>
+        <mat-card-subtitle>Search, add, and remove movies from the database</mat-card-subtitle>
+      </mat-card-header>
+      
+      <mat-card-content>
+        <div class="search-section">
+          <h3>Search for Movies</h3>
+          <form [formGroup]="searchForm" (ngSubmit)="searchMovie()">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Movie Title</mat-label>
+              <input matInput formControlName="title" placeholder="Enter movie title">
+              <mat-error *ngIf="searchForm.get('title')?.invalid">Movie title is required</mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary" type="submit" [disabled]="searchForm.invalid || isLoading">
+              <mat-icon>search</mat-icon> Search
+            </button>
+          </form>
+        </div>
+  
+        <div class="search-results" *ngIf="searchResults.length > 0">
+          <h3>Search Results</h3>
+          <div class="movie-cards-container">
+            <mat-card class="movie-card" *ngFor="let movie of searchResults">
+              <mat-card-header>
+                <mat-card-title>{{ movie.title }}</mat-card-title>
+                <mat-card-subtitle>{{ movie.year }} | {{ movie.rated }}</mat-card-subtitle>
+              </mat-card-header>
+              <img mat-card-image [src]="movie.poster" alt="{{ movie.title }}" *ngIf="movie.poster !== 'N/A'">
+              <div class="placeholder-poster" *ngIf="movie.poster === 'N/A'">
+                <mat-icon>movie</mat-icon>
+                <p>No Poster Available</p>
+              </div>
+              <mat-card-content>
+                <p><strong>Director:</strong> {{ movie.director }}</p>
+                <p><strong>Actors:</strong> {{ movie.actors }}</p>
+                <p><strong>Plot:</strong> {{ movie.plot }}</p>
+              </mat-card-content>
+              <mat-card-actions>
+                <button mat-button color="primary" (click)="toggleMovieSelection(movie.title)">
+                  <mat-icon>{{ isSelected(movie.title) ? 'check_box' : 'check_box_outline_blank' }}</mat-icon>
+                  {{ isSelected(movie.title) ? 'Selected' : 'Select' }}
+                </button>
+              </mat-card-actions>
+            </mat-card>
+          </div>
+  
+          <div class="action-buttons">
+            <button mat-raised-button color="primary" (click)="addSelectedMovies()" [disabled]="selectedMovies.length === 0 || isLoading">
+              <mat-icon>add</mat-icon> Add Selected Movies
+            </button>
+            <button mat-raised-button color="warn" (click)="removeMovies()" [disabled]="selectedMovies.length === 0 || isLoading">
+              <mat-icon>delete</mat-icon> Remove Selected Movies
+            </button>
+          </div>
+        </div>
+  
+        <div class="batch-section">
+          <h3>Batch Process Movies</h3>
+          <p>Enter multiple movie titles separated by commas (max 10)</p>
+          <form [formGroup]="batchForm">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Movie Titles</mat-label>
+              <textarea matInput formControlName="titles" placeholder="The Godfather, Pulp Fiction, The Matrix"></textarea>
+              <mat-error *ngIf="batchForm.get('titles')?.invalid">Movie titles are required</mat-error>
+            </mat-form-field>
+            
+            <div class="batch-buttons">
+              <button mat-raised-button color="primary" (click)="processBatchMovies('add')" [disabled]="batchForm.invalid || isLoading">
+                <mat-icon>add</mat-icon> Add Batch
+              </button>
+              <button mat-raised-button color="warn" (click)="processBatchMovies('delete')" [disabled]="batchForm.invalid || isLoading">
+                <mat-icon>delete</mat-icon> Delete Batch
+              </button>
+            </div>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

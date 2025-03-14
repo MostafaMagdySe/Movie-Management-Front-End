@@ -1,0 +1,50 @@
+/* src/app/auth/register/register.component.scss */
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    min-height: calc(100vh - 120px);
+  }
+  
+  mat-card {
+    max-width: 400px;
+    width: 100%;
+  }
+  
+  mat-card-header {
+    margin-bottom: 20px;
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .form-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .error-message {
+    color: #f44336;
+    margin: 10px 0;
+  }
+  
+  button[type="submit"] {
+    height: 36px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  mat-card-title {
+    color: #e8eaf6;  /* Light indigo color for better readability */
+    font-size: 24px;
+    margin: 0 0 1rem 0 !important;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);  /* Subtle text shadow for better contrast */
+  }
